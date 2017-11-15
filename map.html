@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>地图创建</title>
+	<style type="text/css">
+		#canvas{background:black;position:absolute;margin: auto;left: 0;
+		top: 0;
+		right: 0;
+		bottom: 0;}
+	</style>
+<script src="jquery-1.11.1.js"></script>
+<script type="text/javascript">
+$(function(){
+	var gc = $('#canvas')[0].getContext('2d')
+	var data = $.map(12,12)
+	var arr = $.mold()
+	//生成地图
+	$.render(data,gc)
+	$.aaa(arr,data)
+	$.render(data,gc)
+
+})
+$.extend({
+	map:function(r,c){
+		var data =[]
+		for(var i = 0;i < r;i++){
+				data.push([]);
+				for(var j = 0;j < c;j++){
+					data[i].push(0);
+				}
+			}
+		return data;
+	},
+	mold:function(){
+		var num = Math.floor(Math.random()*7);
+		var arr =  [
+					[[1,1,1,1]],
+					[[1,1],[1,1]],
+					[[1,1,0],[0,1,1]],
+					[[0,1,1],[1,1,0]],
+					[[0,1,0],[1,1,1]],
+					[[1,0,0],[1,1,1]],
+					[[0,0,1],[1,1,1]]
+				];
+		return arr[num];
+	},
+	render:function(data,gc){
+		var w = 500/12;
+		var h = w;
+		$.each(data,function(i){
+		$.each(this,function(j){
+			gc.fillStyle = data[i][j]==0?'gray':'yellow'
+			gc.fillRect(j*w+5, i*h+5, w-10, h-10)
+		})
+	})
+	},
+	aaa:function(obj,obj1){
+		$.each(obj,function(i){
+		$.each(this,function(j){
+			obj1[i][j+4] = obj[i][j]
+		})
+	})
+	}
+
+})
+</script>
+</head>
+<body>
+<canvas id="canvas" height="500" width="500"></canvas>
+</body>
+</html>
